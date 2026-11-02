@@ -1,0 +1,32 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+runs
+run-data
+logs
+*.log
+dist
+repo
+
+# 第三方二进制（ldlib2 解包缓存、反编译工具等）
+libs/
+tools/*.jar

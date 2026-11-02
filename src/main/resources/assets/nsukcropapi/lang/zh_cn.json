@@ -1,0 +1,22 @@
+{
+  "gui.nsukcropapi.select_crop.hint": "雇佣农民后选择作物，把种子放进农田盒旁边的箱子即可。",
+  "gui.nsukcropapi.select_crop.search": "搜索作物（中文 / English）",
+  "gui.nsukcropapi.select_crop.group_collapsed": "▶ %s",
+  "gui.nsukcropapi.select_crop.group_expanded": "▼ %s",
+  "gui.nsukcropapi.select_crop.group_vanilla": "原版",
+  "gui.nsukcropapi.select_crop.empty": "暂无可选作物",
+  "gui.nsukcropapi.select_crop.no_match": "没有匹配的作物",
+  "message.nsukcropapi.crop_set": "已将农田盒作物设为 %s",
+  "message.nsukcropapi.crop_failed": "无法设置作物：农田盒正在运行或不可用",
+  "message.nsukcropapi.no_box": "请先把准星对准农田盒",
+  "message.nsukcropapi.unknown_crop": "未知作物：%s",
+  "message.nsukcropapi.no_permission": "你没有管理这个农田盒的权限",
+  "gui.nsukcropapi.waiting_soil": "等待土壤：%s",
+  "gui.nsukcropapi.trellis.waiting_item": "等待材料：%s",
+  "gui.nsukcropapi.trellis.placing_soil": "正在铺土",
+  "gui.nsukcropapi.trellis.placing_item": "正在搭架：%s",
+  "gui.nsukcropapi.config.title": "NSUK 作物设置",
+  "gui.nsukcropapi.config.auto_discovery": "自动发现未列出的作物",
+  "gui.nsukcropapi.config.on": "开启",
+  "gui.nsukcropapi.config.off": "关闭"
+}

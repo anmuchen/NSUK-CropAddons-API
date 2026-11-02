@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.nsukcropapi.mixin.v2.client",
+  "plugin": "com.nsukcropapi.mixin.CropApiMixinPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "FarmlandCropScreenMixin",
+    "FarmlandBoxScreenOpenerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixinextras": {
+    "minVersion": "0.4.0"
+  }
+}

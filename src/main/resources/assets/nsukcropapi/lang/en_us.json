@@ -1,0 +1,22 @@
+{
+  "gui.nsukcropapi.select_crop.hint": "Hire a farmer, then pick a crop. Put the seeds into the chest next to the farmland box.",
+  "gui.nsukcropapi.select_crop.search": "Search crops (Chinese / English)",
+  "gui.nsukcropapi.select_crop.group_collapsed": "▶ %s",
+  "gui.nsukcropapi.select_crop.group_expanded": "▼ %s",
+  "gui.nsukcropapi.select_crop.group_vanilla": "Vanilla",
+  "gui.nsukcropapi.select_crop.empty": "No crops available",
+  "gui.nsukcropapi.select_crop.no_match": "No matching crops",
+  "message.nsukcropapi.crop_set": "Farmland box crop set to %s",
+  "message.nsukcropapi.crop_failed": "Cannot set crop - the farmland box is running or unavailable",
+  "message.nsukcropapi.no_box": "Look at a farmland box first",
+  "message.nsukcropapi.unknown_crop": "Unknown crop: %s",
+  "message.nsukcropapi.no_permission": "You do not have permission to manage this farmland box",
+  "gui.nsukcropapi.waiting_soil": "Waiting for soil: %s",
+  "gui.nsukcropapi.trellis.waiting_item": "Waiting for: %s",
+  "gui.nsukcropapi.trellis.placing_soil": "Placing soil",
+  "gui.nsukcropapi.trellis.placing_item": "Building trellis: %s",
+  "gui.nsukcropapi.config.title": "NSUK Crop Settings",
+  "gui.nsukcropapi.config.auto_discovery": "Auto-discover unlisted crops",
+  "gui.nsukcropapi.config.on": "ON",
+  "gui.nsukcropapi.config.off": "OFF"
+}

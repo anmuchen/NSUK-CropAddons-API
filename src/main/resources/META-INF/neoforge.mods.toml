@@ -1,0 +1,46 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="GPL 3.0"
+
+[[mods]]
+modId="nsukcropapi"
+version="1.0.0"
+displayName="NSUK：作物 API"
+logoFile="logo.png"
+authors="XiaoLiang小亮&安沐尘"
+description='''
+模拟城市（simukraft）农田盒的作物接入 API。
+
+各作物附属只需要在 FMLCommonSetupEvent 里调用 CropRegistry.register(...) 注册作物数据，
+农田盒作业流程、存档字段、选择界面、与其它附属的共存仲裁全部由本模组统一提供。
+
+前置：New: Sim-U-Kraft（simukraft）。
+'''
+
+[[mixins]]
+config="nsukcropapi.mixins.json"
+
+[[mixins]]
+config="nsukcropapi.client.mixins.json"
+
+[[dependencies.nsukcropapi]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.228,21.2)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.nsukcropapi]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.nsukcropapi]]
+    modId="simukraft"
+    type="required"
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+    reason="前置模组：New: Sim-U-Kraft"
