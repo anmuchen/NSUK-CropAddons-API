@@ -22,7 +22,7 @@ import java.util.Set;
 public final class CropApiMixinPlugin implements IMixinConfigPlugin {
 
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String FARMLAND = "common/cn/kafei/simukraft/farmland/";
+    private static final String FARMLAND = "common/cn/nsimu/simukraft/farmland/";
     private static final String LEVEL = "Lnet/minecraft/server/level/ServerLevel;";
     private static final String BOX = "L" + FARMLAND + "FarmlandBoxData;";
     private static final String LIST = "Ljava/util/List;";
@@ -35,6 +35,8 @@ public final class CropApiMixinPlugin implements IMixinConfigPlugin {
     private static boolean clientOk;
     private static boolean openerOk;
     private static boolean stagesOk;
+    private static boolean reachOk;
+    private static boolean geometryOk;
 
     @Override
     public void onLoad(String mixinPackage) {
@@ -53,6 +55,12 @@ public final class CropApiMixinPlugin implements IMixinConfigPlugin {
         }
         if (mixinClassName.contains("FarmlandStageMixin")) {
             return stagesOk;
+        }
+        if (mixinClassName.contains("FarmlandReachMixin")) {
+            return reachOk;
+        }
+        if (mixinClassName.contains("FarmlandWorkGeometryMixin")) {
+            return geometryOk;
         }
         return mixinClassName.contains(".v2.client.") ? clientOk : serverOk;
     }
@@ -84,8 +92,10 @@ public final class CropApiMixinPlugin implements IMixinConfigPlugin {
         clientOk = serverOk && checkClient(loader);
         openerOk = serverOk && checkOpener(loader);
         stagesOk = serverOk && checkStages(loader);
-        LOGGER.info("[nsukcropapi] simukraft {} integration: server={}, client={}, opener={}, stages={}",
-                modVersion(), serverOk, clientOk, openerOk, stagesOk);
+        reachOk = serverOk && checkReach(loader);
+        geometryOk = serverOk && checkGeometry(loader);
+        LOGGER.info("[nsukcropapi] simukraft {} integration: server={}, client={}, opener={}, stages={}, reach={}, geometry={}",
+                modVersion(), serverOk, clientOk, openerOk, stagesOk, reachOk, geometryOk);
         if (!serverOk) {
             LOGGER.warn("[nsukcropapi] simukraft 农田盒 API 不匹配，已跳过联动（作物本体不受影响）");
         }
@@ -187,21 +197,38 @@ public final class CropApiMixinPlugin implements IMixinConfigPlugin {
                 && farming.contains("usesGroupedFarmScan(L" + FARMLAND + "FarmlandWorkPhase;)Z");
     }
 
+    /** 藤架可达性接管：宿主得先有 {@code isCloseEnoughToWork}，且作业目标里带作物坐标。 */
+    private static boolean checkReach(ClassLoader loader) {
+        Set<String> farming = methods(loader, FARMLAND + "FarmlandFarmingService");
+        return farming != null && farming.contains(
+                "isCloseEnoughToWork(" + LEVEL + POS
+                        + "Lcommon/cn/nsimu/simukraft/citizen/CitizenData;"
+                        + "Lcommon/cn/nsimu/simukraft/entity/CitizenEntity;"
+                        + "L" + FARMLAND + "FarmlandWorkTarget;)Z");
+    }
+
+    /** 藤架站位接管：宿主的几何工具类得还提供 {@code workAnchorFor}。 */
+    private static boolean checkGeometry(ClassLoader loader) {
+        Set<String> geometry = methods(loader, FARMLAND + "FarmlandWorkGeometry");
+        return geometry != null
+                && geometry.contains("workAnchorFor(" + LEVEL + POS + POS + ")Lnet/minecraft/world/phys/Vec3;");
+    }
+
     private static boolean checkClient(ClassLoader loader) {
-        Set<String> screen = methods(loader, "client/cn/kafei/simukraft/client/farmland/FarmlandCropScreen");
+        Set<String> screen = methods(loader, "client/cn/nsimu/simukraft/client/farmland/FarmlandCropScreen");
         if (screen == null) {
             return knownVersion();
         }
-        return screen.contains("open(Lcommon/cn/kafei/simukraft/network/farmland/FarmlandBoxOpenResponsePacket;)V");
+        return screen.contains("open(Lcommon/cn/nsimu/simukraft/network/farmland/FarmlandBoxOpenResponsePacket;)V");
     }
 
     private static boolean checkOpener(ClassLoader loader) {
-        Set<String> opener = methods(loader, "client/cn/kafei/simukraft/client/farmland/FarmlandBoxScreenOpener");
+        Set<String> opener = methods(loader, "client/cn/nsimu/simukraft/client/farmland/FarmlandBoxScreenOpener");
         if (opener == null) {
             return knownVersion();
         }
         return opener.contains(
-                "cropLine(Lcommon/cn/kafei/simukraft/network/farmland/FarmlandBoxOpenResponsePacket;)Lnet/minecraft/network/chat/Component;");
+                "cropLine(Lcommon/cn/nsimu/simukraft/network/farmland/FarmlandBoxOpenResponsePacket;)Lnet/minecraft/network/chat/Component;");
     }
 
     private static Set<String> methods(ClassLoader loader, String internalName) {

@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
  */
 public final class WorkOutcomes {
 
-    private static final String RESULT_CLASS = "common.cn.kafei.simukraft.farmland.FarmlandWorkResult";
+    private static final String RESULT_CLASS = "common.cn.nsimu.simukraft.farmland.FarmlandWorkResult";
 
     private static volatile boolean resolved;
     private static Object processed;

@@ -1,7 +1,7 @@
 package com.nsukcropapi.nsuk;
 
 import com.nsukcropapi.NsukCropApi;
-import common.cn.kafei.simukraft.material.WorkContainerService;
+import common.cn.nsimu.simukraft.material.WorkContainerService;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
@@ -46,6 +46,27 @@ public final class WorkContainers {
             return WorkContainerService.consumeItem(level, chests, item);
         } catch (Throwable t) {
             return false;
+        }
+    }
+
+    /**
+     * 把一叠物品塞进箱子列表，返回塞不下的余量。
+     *
+     * <p>返回 {@code ItemStack.EMPTY} 表示全部塞进去了；返回原栈表示一个都没塞进去。
+     * 宿主接口不可用时同样原样返回，调用方据此决定要不要掉在地上。</p>
+     */
+    public static ItemStack insert(ServerLevel level, List<BlockPos> chests, ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return stack == null ? ItemStack.EMPTY : stack;
+        }
+        if (level == null || chests == null || chests.isEmpty()) {
+            return stack;
+        }
+        try {
+            ItemStack remainder = WorkContainerService.insertIntoAny(level, chests, stack);
+            return remainder == null ? ItemStack.EMPTY : remainder;
+        } catch (Throwable t) {
+            return stack;
         }
     }
 

@@ -9,7 +9,9 @@
     "FarmlandBoxDataMixin",
     "FarmlandBoxServiceMixin",
     "FarmlandFarmingServiceMixin",
-    "FarmlandStageMixin"
+    "FarmlandReachMixin",
+    "FarmlandStageMixin",
+    "FarmlandWorkGeometryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

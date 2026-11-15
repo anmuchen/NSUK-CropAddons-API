@@ -2,7 +2,7 @@ package com.nsukcropapi.crop;
 
 import com.nsukcropapi.nsuk.FarmlandBoxDataExt;
 import com.nsukcropapi.NsukCropApi;
-import common.cn.kafei.simukraft.farmland.FarmlandBoxData;
+import common.cn.nsimu.simukraft.farmland.FarmlandBoxData;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Optional;

@@ -6,7 +6,7 @@ import com.nsukcropapi.api.CropRules;
 import com.nsukcropapi.api.CropSpec;
 import com.nsukcropapi.api.CropWork;
 import com.nsukcropapi.nsuk.CropContext;
-import common.cn.kafei.simukraft.farmland.FarmCrop;
+import common.cn.nsimu.simukraft.farmland.FarmCrop;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;

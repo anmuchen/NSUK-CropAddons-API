@@ -1,11 +1,11 @@
 package com.nsukcropapi.mixin.v2.client;
 
-import client.cn.kafei.simukraft.client.farmland.FarmlandBoxScreenOpener;
+import client.cn.nsimu.simukraft.client.farmland.FarmlandBoxScreenOpener;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.nsukcropapi.api.CropRegistry;
 import com.nsukcropapi.api.CropSpec;
-import common.cn.kafei.simukraft.network.farmland.FarmlandBoxOpenResponsePacket;
+import common.cn.nsimu.simukraft.network.farmland.FarmlandBoxOpenResponsePacket;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 

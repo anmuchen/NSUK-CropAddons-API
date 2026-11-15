@@ -193,6 +193,19 @@ public interface CropWork {
         return false;
     }
 
+    /**
+     * 该作物是否使用藤架 / 木格架 / 藤茎堆这类"需要改写雇农站位"的几何。
+     *
+     * <p>API 的站位与可达性 mixin 会问一次：答 {@code true} 时接管宿主的
+     * {@code workAnchorFor} 与 {@code isCloseEnoughToWork}，把雇农放到藤架下的落脚点，
+     * 或在走不过去时传送到够得到的位置。</p>
+     *
+     * <p>返回 {@code null} 表示本作物不参与，宿主原逻辑照旧。</p>
+     */
+    default Boolean usesTrellisWork(CropSpec spec) {
+        return null;
+    }
+
     /** 是否从作物选择界面隐藏（存档里已有的农田盒仍可继续使用该作物）。 */
     default boolean hiddenFromUi(CropSpec spec) {
         return false;

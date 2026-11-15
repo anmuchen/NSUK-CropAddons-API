@@ -76,7 +76,7 @@ public final class FarmlandBoxes {
             synchronized (FarmlandBoxes.class) {
                 if (!resolved) {
                     try {
-                        Class<?> service = Class.forName("common.cn.kafei.simukraft.farmland.FarmlandBoxService");
+                        Class<?> service = Class.forName("common.cn.nsimu.simukraft.farmland.FarmlandBoxService");
                         setCropMethod = service.getMethod("setCrop", ServerLevel.class, BlockPos.class, String.class);
                     } catch (Throwable t) {
                         setCropMethod = null;
@@ -93,9 +93,9 @@ public final class FarmlandBoxes {
             synchronized (FarmlandBoxes.class) {
                 if (!permissionResolved) {
                     try {
-                        Class<?> service = Class.forName("common.cn.kafei.simukraft.farmland.FarmlandBoxService");
+                        Class<?> service = Class.forName("common.cn.nsimu.simukraft.farmland.FarmlandBoxService");
                         cityIdMethod = service.getMethod("cityIdFor", ServerLevel.class, BlockPos.class);
-                        Class<?> cityService = Class.forName("common.cn.kafei.simukraft.city.CityService");
+                        Class<?> cityService = Class.forName("common.cn.nsimu.simukraft.city.CityService");
                         canManageMethod = cityService.getMethod("canManageCity",
                                 ServerLevel.class, UUID.class, UUID.class);
                     } catch (Throwable t) {

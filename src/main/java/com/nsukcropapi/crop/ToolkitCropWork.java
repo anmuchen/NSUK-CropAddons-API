@@ -359,6 +359,12 @@ public final class ToolkitCropWork implements CropWork {
     }
 
     @Override
+    public Boolean usesTrellisWork(CropSpec spec) {
+        ResolvedCrop crop = crop(spec);
+        return crop == null ? null : crop.isTrellisWork();
+    }
+
+    @Override
     public boolean hiddenFromUi(CropSpec spec) {
         ResolvedCrop crop = crop(spec);
         return crop != null && crop.spec().hidden();
@@ -425,7 +431,7 @@ public final class ToolkitCropWork implements CropWork {
         return CropCatalog.resolve(spec.id()).orElse(null);
     }
 
-    private static common.cn.kafei.simukraft.farmland.FarmlandBoxData box(CropWorkContext ctx) {
-        return ctx != null && ctx.data() instanceof common.cn.kafei.simukraft.farmland.FarmlandBoxData data ? data : null;
+    private static common.cn.nsimu.simukraft.farmland.FarmlandBoxData box(CropWorkContext ctx) {
+        return ctx != null && ctx.data() instanceof common.cn.nsimu.simukraft.farmland.FarmlandBoxData data ? data : null;
     }
 }

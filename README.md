@@ -3,7 +3,7 @@
 把任意作物模组接入 **New: Sim-U-Kraft（simukraft）** 的农田盒系统。
 
 - 模组 ID：`nsukcropapi`
-- 版本：1.0.0
+- 版本：1.1.0
 - 运行环境：Minecraft 1.21.1 / NeoForge 21.1.228 – 21.1.x
 - 前置：`New: Sim-U-Kraft`（simukraft）2.0.0+
 - 许可证：GNU General Public License v3.0
@@ -106,7 +106,7 @@ harvest_max_age / plant_mature / plant_properties / waterlog / allow_non_crop_bl
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-产物：`build/libs/nsukcropapi-1.0.0.jar`
+产物：`build/libs/nsukcropapi-1.1.0.jar`
 
 ### 构建的前置条件（重要）
 

@@ -1,10 +1,10 @@
 package com.nsukcropapi.mixin.v2.client;
 
-import client.cn.kafei.simukraft.client.farmland.FarmlandCropScreen;
+import client.cn.nsimu.simukraft.client.farmland.FarmlandCropScreen;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.nsukcropapi.client.CropSelectScreen;
-import common.cn.kafei.simukraft.network.farmland.FarmlandBoxOpenResponsePacket;
+import common.cn.nsimu.simukraft.network.farmland.FarmlandBoxOpenResponsePacket;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
