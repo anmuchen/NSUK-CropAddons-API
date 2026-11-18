@@ -669,12 +669,21 @@ public final class ResolvedCrop {
          : false;
    }
 
+   /** 规范键名：{@code crop.<来源模组 id>.<作物 id>}，由各附属在自己的语言文件里提供。 */
    public String statusTranslationKey() {
+      String modId = this.sourceModId();
+      return modId == null || modId.isBlank()
+         ? "crop." + this.id()
+         : "crop." + modId + "." + this.id();
+   }
+
+   /** 历史遗留键名：{@code crop.letsdocropaddons.<作物 id>}，保留只为兼容旧附属的语言文件。 */
+   public String legacyStatusTranslationKey() {
       return "crop.letsdocropaddons." + this.id();
    }
 
    public String seedTranslationKey() {
-      return this.seed != null && this.seed != Items.AIR ? this.seed.getDescriptionId() : this.statusTranslationKey();
+      return this.seed != null && this.seed != Items.AIR ? this.seed.getDescriptionId() : this.translationKey();
    }
 
    public boolean isProduce(BlockState state) {
@@ -684,13 +693,32 @@ public final class ResolvedCrop {
    public String translationKey() {
       if (this.isMissing()) {
          return "gui.simukraft.farmland_box.none";
-      } else if (this.isTrellisWork()) {
-         return this.statusTranslationKey();
-      } else if (this.seed != null && this.seed != Items.AIR) {
-         return this.seed.getDescriptionId();
-      } else {
-         return this.plantBlock != null && this.plantBlock != Blocks.AIR ? this.plantBlock.getDescriptionId() : "gui.simukraft.farmland_box.none";
       }
+      if (this.isTrellisWork()) {
+         // 格架类作物没有统一的物品名可用，优先走语言键；
+         // 键名依次尝试「规范键名」与「历史键名」，两者都查不到时退回果实物品名，
+         // 避免界面上出现 crop.xxx.yyy 这样的原始键。
+         String canonical = this.statusTranslationKey();
+         if (hasTranslation(canonical)) {
+            return canonical;
+         }
+         String legacy = this.legacyStatusTranslationKey();
+         if (hasTranslation(legacy)) {
+            return legacy;
+         }
+         if (this.fruitItem != null && this.fruitItem != Items.AIR) {
+            return this.fruitItem.getDescriptionId();
+         }
+      }
+      if (this.seed != null && this.seed != Items.AIR) {
+         return this.seed.getDescriptionId();
+      }
+      return this.plantBlock != null && this.plantBlock != Blocks.AIR ? this.plantBlock.getDescriptionId() : "gui.simukraft.farmland_box.none";
+   }
+
+   /** 语言文件里是否存在该键；服务端没有客户端语言包时返回 false，调用方会退回物品名。 */
+   private static boolean hasTranslation(String key) {
+      return key != null && !key.isBlank() && net.minecraft.locale.Language.getInstance().has(key);
    }
 
    private static boolean looksTall(BlockState state) {

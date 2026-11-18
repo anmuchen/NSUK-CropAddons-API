@@ -118,7 +118,7 @@ if ($LASTEXITCODE -ne 0) { throw "Mod compilation failed" }
 Write-Host "[3/3] Packaging..." -ForegroundColor Cyan
 $libsDir = Join-Path $buildDir "libs"
 New-Item -ItemType Directory -Force -Path $libsDir | Out-Null
-$outJar = Join-Path $libsDir "nsukcropapi-1.1.0.jar"
+$outJar = Join-Path $libsDir "nsukcropapi-1.1.1.jar"
 if (Test-Path $outJar) { Remove-Item -Force $outJar }
 & jar --create --file $outJar -C $classesDir . -C $resources .
 if ($LASTEXITCODE -ne 0) { throw "Packaging failed" }

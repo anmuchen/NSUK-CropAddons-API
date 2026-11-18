@@ -396,7 +396,7 @@ public final class ToolkitCropWork implements CropWork {
                 : TrellisCropWork.statusItemForPhase(level, crop, box(ctx), statusKey);
         Component itemName = item != null && item != Items.AIR
                 ? item.getName(new ItemStack(item))
-                : Component.translatable(crop.statusTranslationKey());
+                : Component.translatable(crop.translationKey());
         boolean missingSeed = STATUS_MISSING_SEED.equals(statusKey);
         boolean till = STATUS_TILL.equals(statusKey);
         boolean soilItem = item != null && item != Items.AIR && crop.soilItems().contains(item);
