@@ -3,9 +3,9 @@
 把任意作物模组接入 **New: Sim-U-Kraft（simukraft）** 的农田盒系统。
 
 - 模组 ID：`nsukcropapi`
-- 版本：1.1.0
+- 版本：1.1.1
 - 运行环境：Minecraft 1.21.1 / NeoForge 21.1.228 – 21.1.x
-- 前置：`New: Sim-U-Kraft`（simukraft）2.0.0+
+- 前置：`New: Sim-U-Kraft`（simukraft）2.3.0+（自 2.3.0 起包名为 `common.cn.nsimu.simukraft`）
 - 许可证：GNU General Public License v3.0
 
 ---
@@ -74,12 +74,59 @@ src/main/java/com/nsukcropapi/crop/CropJsonLoader.java
 已被现有附属使用的字段包括：
 
 ```
-seed / plant / layout(full|stem|trellis) / fruit_block / fruit_item / support_block /
+seed / plant / name_key / layout(full|stem|trellis) / fruit_block / fruit_item / support_block /
 soil_tag / soil_blocks / soil_item / soil_exclude / harvest_blocks / harvest_height /
 harvest_max_age / plant_mature / plant_properties / waterlog / allow_non_crop_block
 ```
 
-### 3. 需要特殊作业逻辑时
+### 3. 作物显示名（可选）
+
+农田盒的选择界面按下列顺序解析显示名，前一级取不到才看下一级：
+
+| 顺序 | 来源 | 说明 |
+| --- | --- | --- |
+| 1 | JSON 的 `name_key` | 显式声明，优先级最高 |
+| 2 | `crop.<来源模组 id>.<作物 id>` | 规范命名；来源模组 id 即 JSON 顶层的 `mod`，作物 id 为 `prefix` + `_` + `id` |
+| 3 | `crop.letsdocropaddons.<作物 id>` | 历史键名，仅为兼容早期附属的语言文件而保留 |
+| 4 | `fruit_item` 的物品名 | 格架类作物常用此级 |
+| 5 | 种子物品名，再退回作物方块名 | 兜底 |
+
+三种写法任选其一：
+
+**写法一：借用宿主模组已有的语言键**，不需要自己写语言文件。
+
+```json
+{
+  "id": "ice_grape",
+  "seed": "kaleidoscope_tavern:grapevine",
+  "plant": "kaleidoscope_tavern:ice_grapevine_trellis",
+  "layout": "trellis",
+  "fruit_item": "kaleidoscope_tavern:ice_grape",
+  "name_key": "item.kaleidoscope_tavern.ice_grape"
+}
+```
+
+**写法二：指向自己定义的键**，在 `assets/<modId>/lang/zh_cn.json` 里补一条同名条目。
+
+```json
+{ "id": "ice_grape", "name_key": "crop.exampleaddons.frost_grape" }
+```
+
+```json
+{ "crop.exampleaddons.frost_grape": "霜语葡萄" }
+```
+
+**写法三：不写 `name_key`**，只在 `assets/<modId>/lang/zh_cn.json` 里按规范命名提供一条。
+
+```json
+{ "crop.exampleaddons.ktv_ice_grape": "冰葡萄" }
+```
+
+上例中 `exampleaddons` 是 JSON 顶层的 `mod`，`ktv_ice_grape` 是 `prefix` 为 `ktv` 时 `id` 为 `ice_grape` 的组合结果。
+
+键不存在时不会显示 `crop.xxx.yyy` 这样的原始键名，会自动退到物品名或种子名；因此 `name_key` 写错也不会破坏界面，只是退回自动推导。
+
+### 4. 需要特殊作业逻辑时
 
 大多数作物用默认的 `FarmlandCropWork` 即可。若作物需要完全不同的作业方式（例如搭架、特殊土壤判定），实现 `com.nsukcropapi.api.CropWork` 并在 `CropSpec` 中指定。
 
@@ -106,7 +153,7 @@ harvest_max_age / plant_mature / plant_properties / waterlog / allow_non_crop_bl
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
-产物：`build/libs/nsukcropapi-1.1.0.jar`
+产物：`build/libs/nsukcropapi-1.1.1.jar`
 
 ### 构建的前置条件（重要）
 
