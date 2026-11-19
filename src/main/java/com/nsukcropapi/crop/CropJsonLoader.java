@@ -96,6 +96,9 @@ public final class CropJsonLoader {
         boolean allowWaterTrough = json.has("allow_water_trough") && json.get("allow_water_trough").getAsBoolean();
         boolean hidden = json.has("hidden") && json.get("hidden").getAsBoolean();
         boolean noWater = json.has("no_water") && json.get("no_water").getAsBoolean();
+        String nameKey = json.has("name_key") && json.get("name_key").isJsonPrimitive()
+                ? json.get("name_key").getAsString()
+                : null;
 
         try {
             return Optional.of(CropSpec.builder(id)
@@ -129,6 +132,7 @@ public final class CropJsonLoader {
                     .allowWaterTrough(allowWaterTrough)
                     .hidden(hidden)
                     .noWater(noWater)
+                    .nameKey(nameKey)
                     .build());
         } catch (IllegalArgumentException exception) {
             com.nsukcropapi.NsukCropApi.LOGGER.warn("[nsukcropapi] 跳过作物 {}: {}", id, exception.getMessage());

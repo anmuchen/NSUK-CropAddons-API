@@ -41,7 +41,9 @@ public record CropSpec(
    /** 不在作物选择界面显示（存档里已有的农田盒仍可继续使用）。 */
    boolean hidden,
    /** 不挖水渠（只给明确不需要水渠的作物，例如烘焙坊生咖啡豆）。 */
-   boolean noWater
+   boolean noWater,
+   /** 显示名语言键（JSON 的 {@code name_key}）；为空时按 {@code crop.<来源模组 id>.<作物 id>} 推导。 */
+   String nameKey
 ) {
    public static final int MAX_ID_LENGTH = 32;
    public static final int MAX_HARVEST_HEIGHT = 8;
@@ -76,7 +78,8 @@ public record CropSpec(
    boolean noSoil,
    boolean allowWaterTrough,
    boolean hidden,
-   boolean noWater
+   boolean noWater,
+   String nameKey
 ) {
    Objects.requireNonNull(id, "id");
       Objects.requireNonNull(sourceModId, "sourceModId");
@@ -123,6 +126,7 @@ public record CropSpec(
          this.allowWaterTrough = allowWaterTrough;
          this.hidden = hidden;
          this.noWater = noWater;
+         this.nameKey = nameKey == null || nameKey.isBlank() ? null : nameKey;
       }
    }
 
@@ -161,6 +165,7 @@ public record CropSpec(
       private boolean allowWaterTrough;
       private boolean hidden;
       private boolean noWater;
+      private String nameKey;
 
       private Builder(String id) {
          this.id = id;
@@ -343,6 +348,15 @@ public record CropSpec(
          return this;
       }
 
+      /**
+       * 显示名语言键。留空时按 {@code crop.<sourceModId>.<id>} 自动推导，
+       * 再退回果实/种子/方块名；填了则优先使用（键不存在时仍会继续回退）。
+       */
+      public CropSpec.Builder nameKey(String nameKey) {
+         this.nameKey = nameKey;
+         return this;
+      }
+
       public CropSpec build() {
          return new CropSpec(
             this.id,
@@ -374,7 +388,8 @@ public record CropSpec(
             this.noSoil,
             this.allowWaterTrough,
             this.hidden,
-            this.noWater
+            this.noWater,
+            this.nameKey
          );
       }
    }

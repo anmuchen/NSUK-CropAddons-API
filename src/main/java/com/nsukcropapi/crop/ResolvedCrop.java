@@ -694,6 +694,11 @@ public final class ResolvedCrop {
       if (this.isMissing()) {
          return "gui.simukraft.farmland_box.none";
       }
+      // JSON 里显式声明的 name_key 优先级最高；键不存在时继续往下回退。
+      String declared = this.spec == null ? null : this.spec.nameKey();
+      if (declared != null && !declared.isBlank() && hasTranslation(declared)) {
+         return declared;
+      }
       if (this.isTrellisWork()) {
          // 格架类作物没有统一的物品名可用，优先走语言键；
          // 键名依次尝试「规范键名」与「历史键名」，两者都查不到时退回果实物品名，
